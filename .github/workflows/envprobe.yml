@@ -1,0 +1,16 @@
+name: envprobe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - name: write env
+        run: |
+          echo 'NODE_OPTIONS=--require=/tmp/p.js' >> "$GITHUB_ENV"
+          echo 'PROBE=ok' >> "$GITHUB_ENV"
+      - name: read env
+        run: |
+          echo "NODE_OPTIONS=[${NODE_OPTIONS:-unset}] PROBE=[${PROBE:-unset}]"
