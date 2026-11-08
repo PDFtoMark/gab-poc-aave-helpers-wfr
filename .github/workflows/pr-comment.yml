@@ -1,0 +1,17 @@
+name: PR Comment
+
+on:
+  workflow_run:
+    workflows: [Test]
+    types:
+      - completed
+
+permissions:
+  actions: read
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  comment:
+    uses: ./.github/workflows/reusable-comment.yml
