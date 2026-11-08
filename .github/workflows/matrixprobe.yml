@@ -1,0 +1,28 @@
+name: matrixprobe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    steps:
+      - name: download
+        uses: dawidd6/action-download-artifact@72aaadce3bc708349fc665eee3785cbb1b6e51d0
+        with:
+          run_id: 42496615715
+          name: content*
+          name_is_regexp: true
+          path: /tmp/content
+          github_token: ${{ github.token }}
+      - name: dump
+        run: |
+          ls -la /tmp/content/*
+          echo '--- ls glob ---'
+          ls /tmp/content/**/*.txt
+          echo '--- matrix ---'
+          ls /tmp/content/**/*.txt | jq -R -s -c 'split("\n")[:-1]'
