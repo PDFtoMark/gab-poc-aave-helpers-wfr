@@ -7,9 +7,9 @@ jobs:
   t:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: dump layout
         run: |
           echo "RUNNER_WORKSPACE=$RUNNER_WORKSPACE"
-          echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
-          ls -la /home/runner/work | head -20
           ls -la /home/runner/work/_actions 2>&1 | head -20
+          find /home/runner/work/_actions -maxdepth 4 -type d -name 'checkout' 2>&1 | head
